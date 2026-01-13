@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<InternalsVisibleTo Include="__PROJECT_NAMESPACE__.Modules.Users.Tests" />
+		<InternalsVisibleTo Include="__PROJECT_NAMESPACE__.Api" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\__PROJECT_NAMESPACE__.Modules.Users.Contracts\__PROJECT_NAMESPACE__.Modules.Users.Contracts.csproj" />
+	</ItemGroup>
+</Project>

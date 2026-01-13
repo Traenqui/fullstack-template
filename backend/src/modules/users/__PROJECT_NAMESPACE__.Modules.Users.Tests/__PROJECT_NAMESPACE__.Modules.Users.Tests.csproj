@@ -8,6 +8,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\__PROJECT_NAMESPACE__.Modules.Users\__PROJECT_NAMESPACE__.Modules.Users.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

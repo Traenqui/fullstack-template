@@ -1,0 +1,57 @@
+services:
+  __project_namespace__.api:
+    image: ${DOCKER_REGISTRY-}projectnamespaceapi
+    container_name: projectnamespace.Api
+    build:
+      context: .
+      dockerfile: src/__PROJECT_NAMESPACE__.Api/Dockerfile
+    depends_on:
+      __project_namespace__.postgres:
+        condition: service_started
+    ports:
+      - 5000:8080
+      - 5001:8081
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://projectnamespace.aspire-dashboard:18889
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+
+  __project_namespace__.postgres:
+    image: postgres:17.7
+    container_name: projectnamespace.Postgres
+    environment:
+      POSTGRES_DB: projectnamespace
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./.containers/postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  __project_namespace__.identity:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: projectnamespace.Identity
+    command: start-dev --import-realm
+    environment:
+      - KC_HEALTH_ENABLED=true
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./.containers/identity:/opt/keycloak/data
+      - ./.files:/opt/keycloak/data/import
+    ports:
+      - 18080:8080
+
+  __project_namespace__.aspire-dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:9.0
+    container_name: projectnamespace.Aspire
+    environment:
+      DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: true
+    ports:
+      - 18888:18888
+
+  __project_namespace__.redis:
+    image: redis:latest
+    container_name: projectnamespace.Redis
+    restart: always
+    ports:
+      - 6379:6379

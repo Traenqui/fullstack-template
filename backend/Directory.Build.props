@@ -1,0 +1,43 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+    </PropertyGroup>
+
+    <!-- Code Analysis -->
+    <PropertyGroup>
+        <AnalysisLevel>latest-all</AnalysisLevel>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <NoWarn>$(NoWarn);CA1014</NoWarn>
+    </PropertyGroup>
+
+    <!-- Build Settings -->
+    <PropertyGroup>
+        <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <BaseOutputPath>$(MSBuildThisFileDirectory)build\bin\$(MSBuildProjectName)\</BaseOutputPath>
+        <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)build\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+        <OutputPath>$(BaseOutputPath)$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>$(BaseIntermediateOutputPath)$(Configuration)\</IntermediateOutputPath>
+        <RestorePackagesPath>$(MSBuildThisFileDirectory)build\packages\</RestorePackagesPath>
+    </PropertyGroup>
+
+    <!-- Package Metadata -->
+    <PropertyGroup>
+        <Authors>Traenqui</Authors>
+        <Company>Your Company</Company>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
+        <PackageReference Include="SonarAnalyzer.CSharp">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>
